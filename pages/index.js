@@ -11,6 +11,9 @@ import Exercises from "../components/Exercises";
 export default function Home() {
   return (
     <Box>
+      <Head>
+        <title>Fitness Club - Best Fitness App in Town</title>
+      </Head>
       <HeroBanner />
       <SearchExercises />
       <Exercises />

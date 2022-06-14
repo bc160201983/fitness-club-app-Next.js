@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    RAPID_API_KEY: "d377e1416cmshe99906af95a39a1p17d2f0jsn7868098e4e21",
+    RAPID_API_KEY: "9286750ed7msh7b25335ae249158p14805bjsn265565b1ff27",
   },
 };
 

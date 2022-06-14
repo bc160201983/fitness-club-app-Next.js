@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { Box, Typography } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
 import BodyPart from "./BodyPart";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import RightArrowIcon from "../public/assets/icons/right-arrow.png";
 import LeftArrowIcon from "../public/assets/icons/left-arrow.png";
-const HorizontalScrollbar = ({ data }) => {
-  //console.log(data);
-
+const HorizontalScrollbar = ({ data, loading }) => {
   const LeftArrow = () => {
     const { scrollPrev } = useContext(VisibilityContext);
 
@@ -28,16 +27,22 @@ const HorizontalScrollbar = ({ data }) => {
   };
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      {data.map((item) => {
+      {data?.map((item) => {
         return (
-          <Box
-            key={item.id || item}
-            itemId={item.id || item}
-            title={item.id || item}
-            m="0 40px"
-          >
-            <BodyPart item={item} />
-          </Box>
+          <>
+            {loading ? (
+              <Skeleton variant="rectangular" width={270} height={280} />
+            ) : (
+              <Box
+                key={item.id || item}
+                itemId={item.id || item}
+                title={item.id || item}
+                m="0 40px"
+              >
+                <BodyPart item={item} />
+              </Box>
+            )}
+          </>
         );
       })}
     </ScrollMenu>

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
-
+import Skeleton from "@mui/material/Skeleton";
 import { Box, Stack, Typography } from "@mui/material/";
 import { useGlobalContext } from "./Context";
 import ExercisesCard from "./ExercisesCard";
 import { exOptions, fetchData } from "./utils/fetchData";
-const url = "https://exercisedb.p.rapidapi.com/exercises";
+
 const Exercises = () => {
   const { ex, setEx, bodyPart } = useGlobalContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [exPerPage] = useState(6);
+  const [loading, setLoading] = useState(false);
   const indexOfLastEx = currentPage * exPerPage;
   const indexOfFirstEx = indexOfLastEx - exPerPage;
   const currentEx = ex.slice(indexOfFirstEx, indexOfLastEx);
@@ -21,14 +22,19 @@ const Exercises = () => {
 
   const fetchExData = async () => {
     let exData = [];
+    setLoading(true);
     if (bodyPart === "all") {
-      exData = await fetchData(url, exOptions);
+      exData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises",
+        exOptions
+      );
     } else {
       exData = await fetchData(
         `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
         exOptions
       );
     }
+    setLoading(false);
     setEx(exData);
   };
 
@@ -47,7 +53,18 @@ const Exercises = () => {
         justifyContent={"center"}
       >
         {currentEx.map((item, index) => {
-          return <ExercisesCard key={`${item.name}-${index}`} item={item} />;
+          return (
+            <>
+              {loading ? (
+                <div className="exercise-card-loading">
+                  <Skeleton variant="rectangular" width={400} height={445} />
+                  <Skeleton variant="text" height={100} />
+                </div>
+              ) : (
+                <ExercisesCard key={`${item.name}-${index}`} item={item} />
+              )}
+            </>
+          );
         })}
       </Stack>
       <Stack sx={{ mt: { lg: "114px", xs: "70px" } }} alignItems="center">
