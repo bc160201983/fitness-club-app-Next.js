@@ -26,7 +26,12 @@ const Detail = ({ exDetail, loading }) => {
   return (
     <Stack
       gap={"60px"}
-      sx={{ flexDirection: { lg: "row" }, p: "20px", alignItems: "center" }}
+      sx={{
+        flexDirection: { lg: "row" },
+        p: "20px",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
       <Head>
         <title>{name} - Fitness Club</title>
